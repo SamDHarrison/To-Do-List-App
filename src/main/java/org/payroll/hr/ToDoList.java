@@ -1,5 +1,6 @@
 package org.payroll.hr;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ToDoList {
@@ -91,7 +92,7 @@ public class ToDoList {
         System.out.print("Enter the description of the item: ");
         Scanner scanner = new Scanner(System.in);
         String description = scanner.nextLine();
-        // TODO Now: Call the add(ToDoItem item) method of the user's to-do items list to add a new item
+        user.setToDoItems(new ToDoItem(description));
     }
 
     /**
@@ -102,7 +103,19 @@ public class ToDoList {
         System.out.print("Enter the number of the item to mark as done: ");
         Scanner scanner = new Scanner(System.in);
         int itemNumber = scanner.nextInt();
-        // TODO Now: Set the isDone field of the item at the specified index to true
+        ArrayList<ToDoItem> items = user.getToDoItems();
+        try {
+            ToDoItem toEdit = items.get(itemNumber);
+
+            toEdit.setDone(true);
+
+            items.set(itemNumber, toEdit);
+
+            user.publishToDoItems(items);
+            System.out.println("Item Updated");
+        } catch (Exception e) {
+            System.out.println("Item not found");
+        }
     }
 
     /**
@@ -113,7 +126,19 @@ public class ToDoList {
         System.out.print("Enter the number of the item to mark as undone: ");
         Scanner scanner = new Scanner(System.in);
         int itemNumber = scanner.nextInt();
-        // TODO Now: Set the isDone field of the item at the specified index to false
+        ArrayList<ToDoItem> items = user.getToDoItems();
+        try {
+            ToDoItem toEdit = items.get(itemNumber);
+
+            toEdit.setDone(false);
+
+            items.set(itemNumber, toEdit);
+
+            user.publishToDoItems(items);
+            System.out.println("Item Updated");
+        } catch (Exception e) {
+            System.out.println("Item not found");
+        }
     }
 
     /**
@@ -124,7 +149,15 @@ public class ToDoList {
         System.out.print("Enter the number of the item to delete: ");
         Scanner scanner = new Scanner(System.in);
         int itemNumber = scanner.nextInt();
-        // TODO Now: Remove the item at the specified index from the user's to-do items list
+        ArrayList<ToDoItem> items = user.getToDoItems();
+        try {
+            items.remove(itemNumber);
+
+            user.publishToDoItems(items);
+            System.out.println("Item Removed");
+        } catch (Exception e) {
+            System.out.println("Item not found");
+        }
     }
 
     /**

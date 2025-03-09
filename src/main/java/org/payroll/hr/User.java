@@ -22,6 +22,15 @@ public class User {
     /**
      * Gets the username of the user.
      */
+
+    public void setToDoItems(ToDoItem item){
+        toDoItems.add(item);
+    }
+
+    public void publishToDoItems(ArrayList<ToDoItem> items){
+        this.toDoItems = items;
+    }
+
     public String getUsername() {
         return username;
     }
