@@ -7,18 +7,8 @@ public class Main {
     // Static list of users, acting as a database
     private static ArrayList<User> users = new ArrayList<>();
 
-    // Mock authentication service that always returns the first user when log in, and does nothing when sign up
-    private static IAuthenticationService authService = new IAuthenticationService() {
-        @Override
-        public User signUp(String username, String password) {
-            return null;
-        }
 
-        @Override
-        public User logIn(String username, String password) {
-            return users.get(0);
-        }
-    };
+    private static AuthenticationService authenticationService = new AuthenticationService(users);
     private static boolean isRunning = true;
 
     /**
@@ -77,10 +67,14 @@ public class Main {
         String username = scanner.nextLine();
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
-        User user = authService.logIn(username, password);
-        System.out.println("Welcome, " + user.getUsername() + "!");
+
+        User user = authenticationService.logIn(username, password);
+        if (user == null){
+            System.out.println("Bad username or password");}else{
+            System.out.println("Welcome, " + user.getUsername() + "!");
         ToDoList userList = new ToDoList(user);
         userList.run();
+        }
     }
 
     /**
@@ -92,8 +86,11 @@ public class Main {
         String username = scanner.nextLine();
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
-        User user = authService.signUp(username, password);
-        // TODO Later: Shows a message based on the result
+        User user = authenticationService.signUp(username, password);
+        if (user != null){
+        System.out.println("Your account is created, " + username);}else{
+            System.out.println("Bad username or password");
+        }
     }
 
     /**
