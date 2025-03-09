@@ -67,12 +67,14 @@ public class Main {
         String username = scanner.nextLine();
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
+
         User user = authenticationService.logIn(username, password);
         if (user == null){
             System.out.println("Bad username or password");}else{
             System.out.println("Welcome, " + user.getUsername() + "!");
+        ToDoList userList = new ToDoList(user);
+        userList.run();
         }
-        // TODO Later: Add the to-do list operations
     }
 
     /**
